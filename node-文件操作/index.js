@@ -32,10 +32,20 @@
 //     }
 //     console.log('拷贝完成')
 // })
-fs.unlink('./copy.txt',(err) => {
-    if(err) {
-        console.log(err)
-        return
-    }
-    console.log('删除成功')
+ 
+// fs.readdir('./',(data,err) => {
+//     if(err) {
+//         console.log(err)
+//         return
+//     }
+//     console.log(data)
+// })
+// // fs.mkdirSync('./test/mkdir', {recursive: true})
+// const dir = fs.readdirSync('./')
+// console.log(dir)
+
+fs.stat('./v/v.txt',(err, stats) => {
+    console.log('stats:',stats.isFile())
 })
+const ax = fs.existsSync('./v/x')
+console.log(ax)

@@ -97,7 +97,6 @@ fs.writeFileSync('./a.txt','同步写入',{
 
 ```
 
-
 ### 文件追加 fs.appendFile / fs.appendFileSync
 `fs.appendFile(filename, data, [options], callback)`
 `fs.appendFileSync(filename, data, [options])`
@@ -137,3 +136,83 @@ fs.unlink('./copy.txt',(err) => {
     console.log('删除成功')
 })
 ```
+
+## 目录操作
+
+### 创建目录 fs.mkdir / fs.mkdirSync
+`fs.mkdir(path, [options], callback(err))`
+1. path: 需要创建的目录
+2. options
+3. callback 回调函数
+
+options
+
+- 1. mode
+- 2. recursive  true | false （指示是否应创建父文件夹）
+
+```js
+fs.mkdir('./test/mkdir',{
+    recursive: false
+},err => {
+    if(err) {
+        console.log(err)
+        return
+    }
+    console.log('创建目录成功')
+})
+fs.mkdirSync('./test/mkdir', {recursive: true})
+```
+
+
+### 删除目录 fs.rmdir / fs.rmdirSync
+
+`fs.rmdir(path,callback(err))`
+
+1. path: 目录
+2. callback: 回调
+
+`fs.rmdirSync(path)`
+
+### 读取目录 fs.readDir / fs.readDirSync
+
+`fs.readdir(path, callback(err,data))`
+`fs.readdirSync(path)`
+
+```js
+fs.readdir('./',(data,err) => {
+    if(err) {
+        console.log(err)
+        return
+    }
+    console.log(data) //返回数组
+})
+const dir = fs.readdirSync('./')
+console.log(dir) //返回数组
+```
+
+### 获取文件信息 fs.stat / fs.statSync
+
+```js
+fs.stat('./a',(err, stat) => {
+    console.log(stat.isFile())
+    
+})
+
+```
+方法  |	返回值含义
+---|---
+stat.isFile() | 如果是文件返回 true 否则返回 false
+stat.isDirectory() | 如果是目录返回 true 否则返回 false
+
+
+### 文件(目录)是否存在 fs.existSync 
+`fs.existSync(filename)`
+
+- fs.exist 已废弃
+
+```js
+const ifExist = fs.existsSync('./v/x')
+console.log(ifExist) // true / false
+
+```
+ 
