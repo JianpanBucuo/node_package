@@ -51,7 +51,9 @@ ax+ | 与a+类似，排它方式打开
 options:{flag:r,encoding: null} //默认值
 ```
 `fs.readFileSync(filename,[, options])`
+
 参数
+
 1. filename 必选 代表文件名
 2. encoding 可选 表示文件字符编码
 3. callback 必选 如果指定 encoding, data是一个解析后的字符串，否则将会以 Buffer 形式表示的二进制数据
@@ -67,13 +69,15 @@ options:{flag:r,encoding: null} //默认值
  console.log('content:', content)
 ```
 
-### 文件写入 fs.writeFile
+### 文件写入 fs.writeFile / fs.writeFileSync
 `fs.writeFile(filename,data, [options], callback)`
-
+`fs.writeFileSync(filename,data, [options])`
 1. filename 必选 文件名
 2. data 必选 要写的数据
 3. options 可选参数
 4. callback 回调
+
+options参数
 
 - encoding 默认值: 'utf8'。
 - mode <integer> 默认值: 0o666。
@@ -94,9 +98,9 @@ fs.writeFileSync('./a.txt','同步写入',{
 ```
 
 
-### fs.appendFile
+### 文件追加 fs.appendFile / fs.appendFileSync
 `fs.appendFile(filename, data, [options], callback)`
-
+`fs.appendFileSync(filename, data, [options])`
 - 该方法与fs.write相似，区别是 fs.write默认 flag: w, fs.appendFile 默认flag: a 追加写入
 ```js
 fs.appendFile('./a.txt','追加写入', {
@@ -104,5 +108,32 @@ fs.appendFile('./a.txt','追加写入', {
 },(err) => {
     var data = fs.readFileSync('./a.txt','utf-8')
     console.log(data)
+})
+```
+
+### 文件拷贝 fs.copyFile / fs.copyFileSync
+`fs.copyFile(filenameA, filenameB, callback)`
+`fs.copyFileFync(filenameA, filenameB)`
+1. filenameA 原始文件名
+2. filenameB 新拷贝到的文件名
+```js
+fs.copyFile('./a.txt','./copy.txt',err=> {
+    if(err) {
+        console.log('拷贝发生错误')
+        return
+    }
+    console.log('拷贝完成')
+})
+```
+### 文件删除 fs.unlink / fs.unlinkSync
+`fs.unlink(filename, callback)`
+`fs.unlink(filename)`
+```js
+fs.unlink('./copy.txt',(err) => {
+    if(err) {
+        console.log(err)
+        return
+    }
+    console.log('删除成功')
 })
 ```
