@@ -44,8 +44,15 @@
 // const dir = fs.readdirSync('./')
 // console.log(dir)
 
-fs.stat('./v/v.txt',(err, stats) => {
-    console.log('stats:',stats.isFile())
+// fs.stat('./v/v.txt',(err, stats) => {
+//     console.log('stats:',stats.isFile())
+// })
+// const ax = fs.existsSync('./v/x')
+// console.log(ax)
+
+fs.readFile('./data.txt','utf-8',(err, data) => {
+    console.log(data)
 })
-const ax = fs.existsSync('./v/x')
-console.log(ax)
+fs.readFile('./data2.txt','utf-8',(err, data) => {
+    console.log(data)
+})

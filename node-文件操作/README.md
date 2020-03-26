@@ -192,6 +192,9 @@ console.log(dir) //返回数组
 
 ### 获取文件信息 fs.stat / fs.statSync
 
+`fs.stat(path|filename)`
+1. path|filename  文件或目录
+
 ```js
 fs.stat('./a',(err, stat) => {
     console.log(stat.isFile())
@@ -208,7 +211,7 @@ stat.isDirectory() | 如果是目录返回 true 否则返回 false
 ### 文件(目录)是否存在 fs.existSync 
 `fs.existSync(filename)`
 
-- fs.exist 已废弃
+> fs.exist 已废弃
 
 ```js
 const ifExist = fs.existsSync('./v/x')
