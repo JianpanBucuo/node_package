@@ -10,6 +10,7 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/component.png" width="707" height="348"/>
+
 ## I/O
 
 ### 阻塞I/O
@@ -62,7 +63,14 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async_picture.png" width="561" height="510"/>
 
+#### 事件循环的本质
+
+通过`主循环`加`事件触发`的方式加上`异步非阻塞`的特点运行程序
+
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/circle.png" width="679" height="484"/>
+
 ## node的优势
 
 1. 利用单线程，远离多线程死锁，状态同步等问题
 2. 利用异步I/O，让单线程远离阻塞，以更好的提高CPU利用率
+3. node以事件驱动的方式处理请求，无须为每一个请求创建额外的对应线程，可以省掉创建线程和销毁线程的开销，同时操作系统在调度任务时因为线程较少，上下文切换的代价很低，这使得服务器可以有条不紊的处理请求
