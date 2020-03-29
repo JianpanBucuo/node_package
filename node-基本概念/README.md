@@ -6,7 +6,7 @@
 
 这是的单线程仅仅只是Javascript执行在单线程中，除了这部分以外，很多部分都是多线程的
 
-I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池，所以 I/O操作都是可以并行的
+I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池，所以I/O操作都是可以并行的
 
 ## I/O
 
@@ -35,7 +35,7 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 #### 事件循环机制
 
 在进程启动时，node便会创建一个类似于while(true)的循环，每执行一次循环体的过程我们称之为*Tick*。每个Tick的过程就是查看是否有事件待处理，如果有，就取出事件及相关的回调函数并执行它们。然后进入下一个循环（Tick）。如果不再有时间处理，就退出进程。
-
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/event_circle.png" width="433" height="484"/>
 #### 观察者
 
 在Tick的过程中有一个或多个观察者，而判断是否有事件待处理的过程就是向这些观察者询问是否有要处理的事件
@@ -50,4 +50,9 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 2. I/O操作结束后会将数据存储在请求对象上，并通知IOCP
 3. I/O观察者查看IOCP是否有执行完的请求，如果存在，会将请求对象加入I/O观察者队列中，然后将其当作事件处理
 
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async_picture.png" width="561" height="510"/>
+
 ## node的优势
+
+1. 利用单线程，远离多线程死锁，状态同步等问题
+2. 利用异步I/O，让单线程远离阻塞，以更好的提高CPU利用率
