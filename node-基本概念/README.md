@@ -63,7 +63,7 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async_picture.png" width="561" height="510"/>
 
-#### 事件循环的本质
+#### 事件驱动的本质
 
 通过`主循环`加`事件触发`的方式加上`异步非阻塞`的特点运行程序
 
