@@ -1,49 +1,73 @@
-# node基本概念
+## node作为服务器运行时的逻辑（事件驱动的本质）
 
-## 单线程
+通过`主循环`加`事件触发`的方式加上`异步非阻塞I/O`的特点运行程序
 
-我们经常提到node是单线程的
+想要了解这句话我们应该对这几个名词有所了解
 
-这是的单线程仅仅只是Javascript执行在单线程中，除了这部分以外，很多部分都是多线程的
+1. 异步非阻塞I/O
+2. 单线程
+3. 主循环
+4. 事件触发
 
-I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池，所以I/O操作都是可以并行的
+### 异步非阻塞I/O
+
+I/O 是指   `Input output system` ,中文全称为`输入输出系统`
+
+我们时常会听到异步，非阻塞混在一起介绍，下面我们将在下方介绍`异步/同步` `阻塞/非阻塞`这两种概念 
+
+#### 阻塞/非阻塞
 
 
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/component.png" width="707" height="348"/>
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async-sync.png" width="941" height="495"/>
 
-## I/O
+##### 阻塞I/O
 
-### 阻塞I/O
-
-特点：在调用系统内核之后一定要等到系统内核层面完成所有操作后，才返回应用层调用才结束。
+在调用系统内核之后一定要等到系统内核层面完成所有操作后，才返回应用层调用才结束。
 
 以读取磁盘上的一段文件为例，系统内核在完成磁盘寻道，读取数据，复制数据到内存中之后，这个调用才结束
 
 - 阻塞I/O造成CPU等待I/O，浪费等待事件，CPU的处理能力不能得到充分利用
 
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/sync.png" width="310" height="328"/>
 
-### 非阻塞I/O
 
-特点：在调用系统内核之后，不带数据直接返回到应用层，要获取数据，还需要通过文件描述符再次读取
+##### 非阻塞I/O
+
+
+在调用系统内核之后，不带数据直接返回到应用层，要获取数据，还需要通过文件描述符再次读取
 
 优点：在非阻塞I/O返回后，CPU的时间片可以用来处理其他事物，此时的性能提升是明显的。
 
 缺点：由于调用非阻塞I/O后返回的不是应用层期望的数据，而仅仅是当前调用的状态。为了获取完整的数据，应用程序需要重复调用I/O操作来确认是否完成
 
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async.png" width="317" height="385"/>
+#### 同步/异步
+
+是同步还是异步的区别可以理解为被调用者*是否主动*告诉调用者结果
+
 
 `非阻塞同步I/O：需要轮询去确认是否完成数据获取`
 
 `非阻塞异步I/O：等待I/O完成后的通知，执行回调，用户无需考虑轮询`
 
-### node的异步I/O
+介绍完`非阻塞I/O`和`同步/异步`的概念后我们将通过node执行模型介绍node是如何实现`异步I/O`的
 
-#### 事件循环机制
+### 单线程
+
+我们经常提到node是单线程的
+
+这里的单线程仅仅只是Javascript执行在单线程中，除了这部分以外，很多部分都是多线程的
+
+I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池，所以I/O操作都是可以并行的
+
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/component.png" width="707" height="348"/>
+ 
+
+### 事件循环机制 - node执行模型
 
 在进程启动时，node便会创建一个类似于while(true)的循环，每执行一次循环体的过程我们称之为*Tick*。每个Tick的过程就是查看是否有事件待处理，如果有，就取出事件及相关的回调函数并执行它们。然后进入下一个循环（Tick）。如果不再有时间处理，就退出进程。
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/event_circle.png" width="433" height="484"/>
+
+Tick过程中如何判断是否有事件待处理呢？ 这里必须要引入的概念是`观察者`
 
 #### 观察者
 
@@ -63,9 +87,7 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async_picture.png" width="561" height="510"/>
 
-#### 事件驱动的本质
 
-通过`主循环`加`事件触发`的方式加上`异步非阻塞`的特点运行程序
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/circle.png" width="679" height="484"/>
 
@@ -74,3 +96,7 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 1. 利用单线程，远离多线程死锁，状态同步等问题
 2. 利用异步I/O，让单线程远离阻塞，以更好的提高CPU利用率
 3. node以事件驱动的方式处理请求，无须为每一个请求创建额外的对应线程，可以省掉创建线程和销毁线程的开销，同时操作系统在调度任务时因为线程较少，上下文切换的代价很低，这使得服务器可以有条不紊的处理请求
+
+## node的应用场景
+
+node擅长I/O密集型的应用场景，node面向网络且擅长并行I/O，能够有效的组织起更多的硬件资源。
