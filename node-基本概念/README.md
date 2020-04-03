@@ -1,4 +1,4 @@
-## node作为服务器运行时的逻辑（事件驱动的本质）
+# node作为服务器运行时的逻辑（事件驱动的本质）
 
 通过`主循环`加`事件触发`的方式加上`异步非阻塞I/O`的特点运行程序
 
@@ -9,18 +9,18 @@
 3. 主循环
 4. 事件触发
 
-### 异步非阻塞I/O
+## 异步非阻塞I/O
 
 I/O 是指   `Input output system` ,中文全称为`输入输出系统`
 
 我们时常会听到异步，非阻塞混在一起介绍，下面我们将在下方介绍`异步/同步` `阻塞/非阻塞`这两种概念 
 
-#### 阻塞/非阻塞
+### 阻塞/非阻塞
 
 
 <img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async-sync.png" width="941" height="495"/>
 
-##### 阻塞I/O
+#### 阻塞I/O
 
 在调用系统内核之后一定要等到系统内核层面完成所有操作后，才返回应用层调用才结束。
 
@@ -30,8 +30,7 @@ I/O 是指   `Input output system` ,中文全称为`输入输出系统`
 
 
 
-##### 非阻塞I/O
-
+#### 非阻塞I/O
 
 在调用系统内核之后，不带数据直接返回到应用层，要获取数据，还需要通过文件描述符再次读取
 
@@ -39,7 +38,7 @@ I/O 是指   `Input output system` ,中文全称为`输入输出系统`
 
 缺点：由于调用非阻塞I/O后返回的不是应用层期望的数据，而仅仅是当前调用的状态。为了获取完整的数据，应用程序需要重复调用I/O操作来确认是否完成
 
-#### 同步/异步
+### 同步/异步
 
 是同步还是异步的区别可以理解为被调用者*是否主动*告诉调用者结果
 
@@ -58,7 +57,7 @@ I/O 是指   `Input output system` ,中文全称为`输入输出系统`
 
 I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池，所以I/O操作都是可以并行的
 
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/component.png" width="707" height="348"/>
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/component.png" width="395" height="368"/>
  
 
 ### 事件循环机制 - node执行模型
