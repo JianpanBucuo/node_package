@@ -64,7 +64,7 @@ I/O操作实际上是交给libuv来做的，而libuv提供了完整的线程池�
 
 在进程启动时，node便会创建一个类似于while(true)的循环，每执行一次循环体的过程我们称之为*Tick*。每个Tick的过程就是查看是否有事件待处理，如果有，就取出事件及相关的回调函数并执行它们。然后进入下一个循环（Tick）。如果不再有时间处理，就退出进程。
 
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/event_circle.png" width="433" height="484"/>
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/event_circle.png" width="456" height="484"/>
 
 Tick过程中如何判断是否有事件待处理呢？ 这里必须要引入的概念是`观察者`
 
@@ -81,14 +81,7 @@ Tick过程中如何判断是否有事件待处理呢？ 这里必须要引入的
 1. javascript调用核心模块并立即返回到javascript线程，执行当前任务的后续操作
 2. I/O操作结束后会将数据存储在请求对象上，并通知IOCP
 3. I/O观察者查看IOCP是否有执行完的请求，如果存在，会将请求对象加入I/O观察者队列中，然后将其当作事件处理
-
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async-zhouqi.png" width="361" height="371"/>
-
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/async_picture.png" width="561" height="510"/>
-
-
-
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-基本概念/circle.png" width="679" height="484"/>
+ 
 
 ## node的优势
 
