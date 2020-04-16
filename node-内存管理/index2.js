@@ -11,14 +11,14 @@ function showMem () {
 
 const total = []
 const useMem = function() {
-    const size = 20 * 1024 * 1024
-    const arr = new Array(size)
+    const size = 200 * 1024 * 1024
+    const buff = new Buffer(size)
     for(let i = 0; i< size; i++) {
-        arr[i] = 0
+        buff[i] = 0
     }
-    return arr
+    return buff
 }
-for (let i = 0; i< 15; i++) {
+for (let i = 0; i< 10; i++) {
     showMem()
     total.push(useMem())
 }
