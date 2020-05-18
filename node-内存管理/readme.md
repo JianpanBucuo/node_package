@@ -227,7 +227,7 @@ for (let i = 0; i< 15; i++) {
 
 ```
 
-<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-内存管理/memory-usage.png" width="798" height="448"/>
+<img src="https://github.com/JianpanBucuo/node_package/blob/master/node-内存管理/memory-usage.png" width="797" height="588"/>
 
 在接近1500MB的时候，无法继续分配内存，然后进程内存溢出，导致进程退出。
 
@@ -284,3 +284,9 @@ for (let i = 0; i< 10; i++) {
 - 缓存
 - 队列消费不及时  `?` 
 - 作用域未释放
+
+### 内存泄漏排查
+
+#### node-heapdump
+
+`npm install heapdump --save`
